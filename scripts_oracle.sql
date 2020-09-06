@@ -426,82 +426,84 @@ BEGIN
         LOOP
             dbms_output.put_line(mi_salario);
 
-             --------------------SALARIO BASICO-------------------------------------------------------------------
-    salario_basico := (mi_salario / 30) * dias_laborados;
-    dbms_output.put_line(mi_salario);
-    dbms_output.put_line('El salario basico para el id: ' || mi_id || ' es: ' || salario_basico);
+            --------------------SALARIO BASICO-------------------------------------------------------------------
+            salario_basico := (mi_salario / 30) * dias_laborados;
+            dbms_output.put_line(mi_salario);
+            dbms_output.put_line('El salario basico para el id: ' || mi_id || ' es: ' || salario_basico);
 
 
-    -------------------------PRIMA ANTIGUEDAD-------------------------------------------------------------
-    IF antiguedad BETWEEN 0 AND 10 THEN
-        prima_antiguedad := salario_basico * 0.1;
-    ELSIF antiguedad BETWEEN 11 AND 20 THEN
-        prima_antiguedad := salario_basico * 0.15;
-    ELSE
-        prima_antiguedad := salario_basico * 0.20;
-    END IF;
+            -------------------------PRIMA ANTIGUEDAD-------------------------------------------------------------
+            IF antiguedad BETWEEN 0 AND 10 THEN
+                prima_antiguedad := salario_basico * 0.1;
+            ELSIF antiguedad BETWEEN 11 AND 20 THEN
+                prima_antiguedad := salario_basico * 0.15;
+            ELSE
+                prima_antiguedad := salario_basico * 0.20;
+            END IF;
 
-    dbms_output.put_line('La prima de antiguedad para el id: ' || mi_id || ' es: ' || prima_antiguedad);
-
-
-    -------------------------PRIMA SERVICIOS --------------------------------------------------------------
-    IF cargo LIKE '%Manager%' THEN
-        prima_servicios := salario_basico * 0.20;
-    END IF;
-
-    dbms_output.put_line('La prima de servicios para el id: ' || mi_id || ' es: ' || prima_servicios);
-
-    ------------------SUBSIDIO ALIMENTACION------------------------------------------------------------------
-
-    IF mi_salario < 3000 THEN
-        subsidio_alimentacion := (100 / 30) * dias_laborados;
-    END IF;
-
-    dbms_output.put_line('El subsidio de alimentacion para el id: ' || mi_id || ' es: ' || subsidio_alimentacion);
-
-    -----------------------SUBSIDIO TRANSPORTE----------------------------------------------------------------------
-
-    IF mi_salario < 3000 THEN
-        subsidio_transporte := (80 / 30) * dias_laborados;
-    END IF;
-
-    dbms_output.put_line('El subsidio de transporte para el id: ' || mi_id || ' es: ' || subsidio_transporte);
+            dbms_output.put_line('La prima de antiguedad para el id: ' || mi_id || ' es: ' || prima_antiguedad);
 
 
-    -------------------------------TOTAL DEVENGADO-----------------------------------------------------------------
-    total_devengado :=
-                salario_basico + prima_antiguedad + prima_servicios + subsidio_alimentacion + subsidio_transporte;
-    dbms_output.put_line('El total devengado para el id: ' || mi_id || ' es: ' || total_devengado);
+            -------------------------PRIMA SERVICIOS --------------------------------------------------------------
+            IF cargo LIKE '%Manager%' THEN
+                prima_servicios := salario_basico * 0.20;
+            END IF;
 
-    ------------------------------------SALUD ------------------------------------------------------------------
-    salud := salario_basico * 0.12;
-    dbms_output.put_line('Salud para el id: ' || mi_id || ' es: ' || salud);
+            dbms_output.put_line('La prima de servicios para el id: ' || mi_id || ' es: ' || prima_servicios);
 
-    ------------------------------------PENSION-----------------------------------------------------------------
-    pension := salario_basico * 0.16;
-    dbms_output.put_line('Pension para el id: ' || mi_id || ' es: ' || pension);
+            ------------------SUBSIDIO ALIMENTACION------------------------------------------------------------------
+
+            IF mi_salario < 3000 THEN
+                subsidio_alimentacion := (100 / 30) * dias_laborados;
+            END IF;
+
+            dbms_output.put_line(
+                        'El subsidio de alimentacion para el id: ' || mi_id || ' es: ' || subsidio_alimentacion);
+
+            -----------------------SUBSIDIO TRANSPORTE----------------------------------------------------------------------
+
+            IF mi_salario < 3000 THEN
+                subsidio_transporte := (80 / 30) * dias_laborados;
+            END IF;
+
+            dbms_output.put_line('El subsidio de transporte para el id: ' || mi_id || ' es: ' || subsidio_transporte);
 
 
-    ----------------------------------RETEFUENTE ----------------------------------------------------------------
-    IF mi_salario BETWEEN 0 AND 1999 THEN
-        retefuente := salario_basico * 0;
-    ELSIF mi_salario BETWEEN 2000 AND 4999 THEN
-        retefuente := salario_basico * 0.05;
-    ELSIF mi_salario BETWEEN 5000 AND 8999 THEN
-        retefuente := salario_basico * 0.1;
-    ELSE
-        retefuente := salario_basico * 0.15;
-    END IF;
+            -------------------------------TOTAL DEVENGADO-----------------------------------------------------------------
+            total_devengado :=
+                        salario_basico + prima_antiguedad + prima_servicios + subsidio_alimentacion +
+                        subsidio_transporte;
+            dbms_output.put_line('El total devengado para el id: ' || mi_id || ' es: ' || total_devengado);
 
-    dbms_output.put_line('La retefuente para el id: ' || mi_id || ' es: ' || retefuente);
+            ------------------------------------SALUD ------------------------------------------------------------------
+            salud := salario_basico * 0.12;
+            dbms_output.put_line('Salud para el id: ' || mi_id || ' es: ' || salud);
 
-    --------------------------TOTAL DEDUCIDO ----------------------------------------------------------------
-    total_deducido := salud + pension + retefuente;
-    dbms_output.put_line('El total deducido para el id: ' || mi_id || ' es: ' || total_deducido);
+            ------------------------------------PENSION-----------------------------------------------------------------
+            pension := salario_basico * 0.16;
+            dbms_output.put_line('Pension para el id: ' || mi_id || ' es: ' || pension);
 
-    ---------------------------VALOR NETO --------------------------------------------------------------------
-    valor_neto := total_devengado - total_deducido;
-    dbms_output.put_line('El valor neto para el id: ' || mi_id || ' es: ' || valor_neto);
+
+            ----------------------------------RETEFUENTE ----------------------------------------------------------------
+            IF mi_salario BETWEEN 0 AND 1999 THEN
+                retefuente := salario_basico * 0;
+            ELSIF mi_salario BETWEEN 2000 AND 4999 THEN
+                retefuente := salario_basico * 0.05;
+            ELSIF mi_salario BETWEEN 5000 AND 8999 THEN
+                retefuente := salario_basico * 0.1;
+            ELSE
+                retefuente := salario_basico * 0.15;
+            END IF;
+
+            dbms_output.put_line('La retefuente para el id: ' || mi_id || ' es: ' || retefuente);
+
+            --------------------------TOTAL DEDUCIDO ----------------------------------------------------------------
+            total_deducido := salud + pension + retefuente;
+            dbms_output.put_line('El total deducido para el id: ' || mi_id || ' es: ' || total_deducido);
+
+            ---------------------------VALOR NETO --------------------------------------------------------------------
+            valor_neto := total_devengado - total_deducido;
+            dbms_output.put_line('El valor neto para el id: ' || mi_id || ' es: ' || valor_neto);
         END LOOP;
 END;
 
@@ -681,13 +683,30 @@ BEGIN
 END;
 
 
-SELECT SALARY from employees where employee_id='105';
+SELECT
+    salary
+FROM
+    employees
+WHERE
+    employee_id = '105';
 
-SELECT SUM(pyd_value) FROM payroll WHERE pyd=30;
-delete from payroll;
-SELECT * from payroll;
-SELECT * from payroll where employee_id=206;
-
+SELECT
+    SUM(pyd_value)
+FROM
+    payroll
+WHERE
+    pyd = 30;
+DELETE
+FROM
+    payroll;
+SELECT *
+FROM
+    payroll;
+SELECT *
+FROM
+    payroll
+WHERE
+    employee_id = 206;
 
 
 ----Cursores--------------------------------------
@@ -710,6 +729,12 @@ DECLARE
     retefuente            number := 0;
     total_deducido        number := 0;
     valor_neto            number := 0;
+
+    dup_val_on_index EXCEPTION;
+    PRAGMA EXCEPTION_INIT (dup_val_on_index, -00001);
+
+    parent_not_found EXCEPTION;
+    PRAGMA EXCEPTION_INIT (parent_not_found, -2291);
     CURSOR employee_data IS SELECT
                                 e.employee_id
                               , e.salary
@@ -722,7 +747,7 @@ DECLARE
                                     INNER JOIN job_years jy ON e.employee_id = jy.employee_id
                                     INNER JOIN jobs j ON e.job_id = j.job_id;
 BEGIN
-    DELETE FROM payroll;
+    --     DELETE FROM payroll;
     OPEN employee_data;
     LOOP
         FETCH employee_data INTO mi_id,mi_salario,dias_laborados,antiguedad,cargo;
@@ -816,40 +841,123 @@ BEGIN
         valor_neto := total_devengado - total_deducido;
         dbms_output.put_line('El valor neto para el id: ' || mi_id || ' es: ' || valor_neto);
 
-        IF salario_basico > 0 THEN
-            INSERT INTO payroll(employee_id, pyd, pyd_value) VALUES (mi_id, 1, salario_basico);
-        END IF;
-        IF prima_antiguedad > 0 THEN
-            INSERT INTO payroll(employee_id, pyd, pyd_value) VALUES (mi_id, 2, prima_antiguedad);
-        END IF;
-        IF prima_servicios > 0 THEN
-            INSERT INTO payroll(employee_id, pyd, pyd_value) VALUES (mi_id, 3, prima_servicios);
-        END IF;
-        IF subsidio_alimentacion > 0 THEN
-            INSERT INTO payroll(employee_id, pyd, pyd_value) VALUES (mi_id, 4, subsidio_alimentacion);
-        END IF;
-        IF subsidio_transporte > 0 THEN
-            INSERT INTO payroll(employee_id, pyd, pyd_value) VALUES (mi_id, 5, subsidio_transporte);
-        END IF;
-        IF total_devengado > 0 THEN
-            INSERT INTO payroll(employee_id, pyd, pyd_value) VALUES (mi_id, 10, total_devengado);
-        END IF;
-        IF salud > 0 THEN
-            INSERT INTO payroll(employee_id, pyd, pyd_value) VALUES (mi_id, 11, salud);
-        END IF;
-        IF pension > 0 THEN
-            INSERT INTO payroll(employee_id, pyd, pyd_value) VALUES (mi_id, 12, pension);
-        END IF;
-        IF retefuente > 0 THEN
-            INSERT INTO payroll(employee_id, pyd, pyd_value) VALUES (mi_id, 13, retefuente);
-        END IF;
-        IF total_deducido > 0 THEN
-            INSERT INTO payroll(employee_id, pyd, pyd_value) VALUES (mi_id, 20, total_deducido);
-        END IF;
-        IF valor_neto > 0 THEN
-            INSERT INTO payroll(employee_id, pyd, pyd_value) VALUES (mi_id, 30, valor_neto);
-        END IF;
+        BEGIN
+            IF salario_basico > 0 THEN
+                INSERT INTO payroll(employee_id, pyd, pyd_value) VALUES (mi_id, 1, salario_basico);
+            END IF;
+
+            IF prima_antiguedad > 0 THEN
+                INSERT INTO payroll(employee_id, pyd, pyd_value) VALUES (mi_id, 2, prima_antiguedad);
+            END IF;
+            IF prima_servicios > 0 THEN
+                INSERT INTO payroll(employee_id, pyd, pyd_value) VALUES (mi_id, 3, prima_servicios);
+            END IF;
+            IF subsidio_alimentacion > 0 THEN
+                INSERT INTO payroll(employee_id, pyd, pyd_value) VALUES (mi_id, 4, subsidio_alimentacion);
+            END IF;
+            IF subsidio_transporte > 0 THEN
+                INSERT INTO payroll(employee_id, pyd, pyd_value) VALUES (mi_id, 5, subsidio_transporte);
+            END IF;
+            IF total_devengado > 0 THEN
+                INSERT INTO payroll(employee_id, pyd, pyd_value) VALUES (mi_id, 10, total_devengado);
+            END IF;
+            IF salud > 0 THEN
+                INSERT INTO payroll(employee_id, pyd, pyd_value) VALUES (mi_id, 0, salud);
+            END IF;
+            IF pension > 0 THEN
+                INSERT INTO payroll(employee_id, pyd, pyd_value) VALUES (mi_id, 12, pension);
+            END IF;
+            IF retefuente > 0 THEN
+                INSERT INTO payroll(employee_id, pyd, pyd_value) VALUES (mi_id, 13, retefuente);
+            END IF;
+            IF total_deducido > 0 THEN
+                INSERT INTO payroll(employee_id, pyd, pyd_value) VALUES (mi_id, 20, total_deducido);
+            END IF;
+            IF valor_neto > 0 THEN
+                INSERT INTO payroll(employee_id, pyd, pyd_value) VALUES (mi_id, 30, valor_neto);
+            END IF;
+
+        EXCEPTION
+            WHEN parent_not_found THEN
+                dbms_output.put_line('El concepto que se esta ingresando, NO EXISTE');
+            WHEN dup_val_on_index THEN
+                dbms_output.put_line('ELIMINAR LA DATA');
+
+--         EXCEPTION WHEN dup_val_on_index THEN
+
+        END;
 
     END LOOP;
     CLOSE employee_data;
+END;
+
+
+SELECT *
+FROM
+    employees
+WHERE
+    salary < 5000;
+
+
+-------Excepciones------------------------
+DECLARE
+--
+    mi_salario NUMBER := 0;
+    --
+    rx EXCEPTION;
+    --
+    parent_not_found EXCEPTION;
+    PRAGMA EXCEPTION_INIT (parent_not_found, -2291);
+    --
+    still_have_employees EXCEPTION;
+    PRAGMA EXCEPTION_INIT (still_have_employees, -2292);
+    --
+    error_ud EXCEPTION;
+    PRAGMA EXCEPTION_INIT (error_ud, -20000);
+    --
+BEGIN
+    BEGIN
+        SELECT
+            salary
+        INTO mi_salario
+        FROM
+            employees
+        WHERE
+            employee_id = 153;
+        IF mi_salario < 25000 THEN
+            RAISE rx;
+        ELSIF mi_salario < 80000 THEN
+            RAISE_APPLICATION_ERROR(-20000, 'Error user defined');
+        END IF;
+    EXCEPTION
+        WHEN no_data_found THEN
+            BEGIN
+                dbms_output.put_line('(S) NO hay datos para el empleado.');
+                -- INSERT INTO monitor_errores(aplicacion, modulo, fecha, error_txt)
+                -- VALUES( 'App01','Operativo', sysdate,SQLERRM);
+            END;
+        WHEN error_ud THEN dbms_output.put_line('Error user defined');
+        WHEN rx THEN
+            BEGIN
+                mi_salario := mi_salario * 2;
+                dbms_output.put_line('(S) Nuevo salario asignado.');
+            END;
+    END;
+--
+    BEGIN
+        INSERT INTO payroll VALUES (0, 40, 23223);
+        --
+    EXCEPTION
+        WHEN parent_not_found THEN dbms_output.put_line(
+                '(I) Revisar informacion de empleado o del concepto a liquidar.');
+    END;
+    --
+    BEGIN
+        DELETE FROM employees WHERE employee_id = 203;
+        --
+    EXCEPTION
+        WHEN still_have_employees THEN dbms_output.put_line(
+                '(D) Please delete data from payroll or job history before delete employee data.');
+    END;
+    --
 END;
