@@ -735,6 +735,9 @@ DECLARE
 
     parent_not_found EXCEPTION;
     PRAGMA EXCEPTION_INIT (parent_not_found, -2291);
+
+    valor_no_valido EXCEPTION;
+
     CURSOR employee_data IS SELECT
                                 e.employee_id
                               , e.salary
@@ -765,11 +768,19 @@ BEGIN
         total_deducido := 0;
         valor_neto := 0;
         --------------------SALARIO BASICO-------------------------------------------------------------------
-        salario_basico := (mi_salario / 30) * dias_laborados;
-        dbms_output.put_line(mi_salario);
-        dbms_output.put_line('El salario basico para el id: ' || mi_id || ' es: ' || salario_basico);
+        BEGIN
 
-
+            IF dias_laborados > 0 THEN
+                salario_basico := (mi_salario / 30) * dias_laborados;
+                dbms_output.put_line(mi_salario);
+                dbms_output.put_line('El salario basico para el id: ' || mi_id || ' es: ' || salario_basico);
+            ELSIF dias_laborados < 0 THEN
+                RAISE valor_no_valido;
+            END IF;
+        EXCEPTION
+            WHEN valor_no_valido THEN
+                dbms_output.put_line('El valor de los dias laborados debe ser mayor o igual a cero');
+        END;
         -------------------------PRIMA ANTIGUEDAD-------------------------------------------------------------
         IF antiguedad BETWEEN 0 AND 10 THEN
             prima_antiguedad := salario_basico * 0.1;
@@ -882,10 +893,8 @@ BEGIN
                 dbms_output.put_line('El concepto que se esta ingresando, NO EXISTE');
             WHEN dup_val_on_index THEN
                 dbms_output.put_line('ELIMINAR LA DATA');
-
---         EXCEPTION WHEN dup_val_on_index THEN
-
         END;
+
 
     END LOOP;
     CLOSE employee_data;
