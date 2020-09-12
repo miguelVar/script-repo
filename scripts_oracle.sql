@@ -970,3 +970,5 @@ BEGIN
     END;
     --
 END;
+SELECT * from employees;
+select * from payroll where employee_id=100;
